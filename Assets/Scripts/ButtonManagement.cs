@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManagement : MonoBehaviour
 {
+    public GameObject homeScreen;
+    public GameObject logScreen;
+    public GameObject invScreen;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,14 +21,20 @@ public class ButtonManagement : MonoBehaviour
     
     public void HomeScreen()
     {
-        SceneManager.LoadScene(0);
+        homeScreen.SetActive(true);
+        logScreen.SetActive(false);
+        invScreen.SetActive(false);
     }
     public void LogScreen()
     {
-        SceneManager.LoadScene(1);
+        logScreen.SetActive(true);
+        invScreen.SetActive(false);
+        homeScreen.SetActive(false);
     }
     public void InventoryScreen()
     {
-        SceneManager.LoadScene(2);
+        invScreen.SetActive(true);
+        homeScreen.SetActive(false);
+        logScreen.SetActive(false);
     }
 }
