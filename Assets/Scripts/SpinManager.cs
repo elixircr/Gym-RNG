@@ -1,12 +1,16 @@
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class SpinManager : MonoBehaviour
 {
     public int spinsLeft = 3;
+    
+    public GameObject resultPanel;
 
     public TMP_Text spinsText;
+    public TMP_Text resultText;
     
     public Transform invPanelParent;
 
@@ -18,6 +22,7 @@ public class SpinManager : MonoBehaviour
 
     void Start()
     {
+        resultPanel.SetActive(false);
         UpdateUI();
     }
     
@@ -60,6 +65,9 @@ public class SpinManager : MonoBehaviour
         
         AddToInv(prefabToAdd);
         UpdateUI();
+        
+        if (prefabToAdd != null)
+            StartCoroutine(ShowResult(prefabToAdd.name));
     }
 
     void AddToInv(GameObject prefab)
@@ -71,5 +79,18 @@ public class SpinManager : MonoBehaviour
     private void UpdateUI()
     {
         spinsText.text = "Spins left: " + spinsLeft.ToString();
+    }
+    
+    private IEnumerator ShowResult(string itemName)
+    {
+        if (resultPanel == null || resultText == null)
+            yield break; // safety check
+
+        resultPanel.SetActive(true);
+        resultText.text = "You got: " + itemName;
+
+        yield return new WaitForSeconds(2f); // show for 2 seconds
+
+        resultPanel.SetActive(false);
     }
 }
