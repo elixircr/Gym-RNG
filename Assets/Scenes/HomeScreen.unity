@@ -1254,6 +1254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 101934078}
+  running: 0
 --- !u!4 &595976744
 Transform:
   m_ObjectHideFlags: 0
@@ -2320,6 +2321,7 @@ MonoBehaviour:
   logContentParent: {fileID: 1714661125}
   exerciseEntryPrefab: {fileID: 5678659936624248170, guid: 29fc2921c8974344685a87654f348c8c, type: 3}
   addExerciseButton: {fileID: 678022780}
+  timerScript: {fileID: 595976743}
 --- !u!1 &923273650
 GameObject:
   m_ObjectHideFlags: 0

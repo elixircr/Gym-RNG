@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine;
 
-public class SimpleTimer : MonoBehaviour
+public class Timer : MonoBehaviour
 {
     public TMP_Text timerText;
     private float timePast = 0f;
-    private bool running = false;
+    public bool running = false;
 
     void Update()
     {
@@ -27,8 +27,6 @@ public class SimpleTimer : MonoBehaviour
             return;
         timePast = 0f;
         running = true;
-        if (timerText != null)
-            timerText.gameObject.SetActive(true); // show text when timer starts
     }
 
     public void StopTimer()

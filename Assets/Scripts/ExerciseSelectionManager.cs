@@ -1,3 +1,4 @@
+using System.Timers;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +9,8 @@ public class ExerciseSelectionManager : MonoBehaviour
     public Transform logContentParent;
     public GameObject exerciseEntryPrefab;
     public GameObject addExerciseButton;
+
+    public Timer timerScript;
 
     public void SelectExercise(string exerciseName)
     {
@@ -24,5 +27,13 @@ public class ExerciseSelectionManager : MonoBehaviour
         
         mainLogScreen.SetActive(true);
         exerciseSelectionScreen.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (timerScript.running == false)
+        {
+            Destroy(exerciseEntryPrefab);
+        }
     }
 }
