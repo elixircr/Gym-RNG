@@ -32,5 +32,6 @@ public class Timer : MonoBehaviour
     public void StopTimer()
     {
         running = false;
+        SpinManager.instance.FinishedWorkoutSpins();
     }
 }

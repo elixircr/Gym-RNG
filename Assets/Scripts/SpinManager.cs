@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class SpinManager : MonoBehaviour
 {
+    public static SpinManager instance;
+    
     public int spinsLeft = 3;
     
     public GameObject resultPanel;
+    public GameObject FinishPanel;
 
     public TMP_Text spinsText;
     public TMP_Text resultText;
+    public TMP_Text setResultText;
     
     public Transform invPanelParent;
 
@@ -20,6 +24,14 @@ public class SpinManager : MonoBehaviour
     public List<GameObject> legendaryPrefabs; 
     public List<GameObject> mythicPrefabs;
 
+    public int completedSets = 0;
+
+
+    void Awake()
+    {
+        instance = this;
+    }
+    
     void Start()
     {
         resultPanel.SetActive(false);
@@ -83,14 +95,39 @@ public class SpinManager : MonoBehaviour
     
     private IEnumerator ShowResult(string itemName)
     {
-        if (resultPanel == null || resultText == null)
-            yield break; // safety check
-
         resultPanel.SetActive(true);
         resultText.text = "You got: " + itemName;
 
-        yield return new WaitForSeconds(2f); // show for 2 seconds
+        yield return new WaitForSeconds(2f);
 
         resultPanel.SetActive(false);
+    }
+
+    public void AddCompletedSet()
+    {
+        completedSets++;
+    }
+
+    public void RemoveCompletedSets()
+    {
+        completedSets--;
+    }
+
+    public void FinishedWorkoutSpins()
+    {
+        spinsLeft += completedSets;
+        UpdateUI();
+        StartCoroutine(FinishWorkout());
+        completedSets = 0;
+    }
+
+    private IEnumerator FinishWorkout()
+    {
+        FinishPanel.SetActive(true);
+        setResultText.text = "You have finished: " + completedSets + " sets!";
+
+        yield return new WaitForSeconds(2f);
+        
+        FinishPanel.SetActive(false);
     }
 }
