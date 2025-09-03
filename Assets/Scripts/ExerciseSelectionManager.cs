@@ -4,6 +4,7 @@ using TMPro;
 
 public class ExerciseSelectionManager : MonoBehaviour
 {
+    // variables
     public GameObject mainLogScreen;
     public GameObject exerciseSelectionScreen;
     public Transform logContentParent;
@@ -12,6 +13,7 @@ public class ExerciseSelectionManager : MonoBehaviour
 
     public Timer timerScript;
 
+    // function that gets called when the exercise is selected; exercise name is chosen in the inspector panel
     public void SelectExercise(string exerciseName)
     {
         GameObject entry = Instantiate(exerciseEntryPrefab, logContentParent, false);
@@ -29,6 +31,7 @@ public class ExerciseSelectionManager : MonoBehaviour
         exerciseSelectionScreen.SetActive(false);
     }
 
+    // update function
     void Update()
     {
         if (timerScript.running == false)

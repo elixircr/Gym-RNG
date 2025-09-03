@@ -2,21 +2,11 @@ using UnityEngine;
 
 public class LogCanvas : MonoBehaviour
 {
+    
     public GameObject mainLogScreenCanvas;
     public GameObject exerciseSelectionCanvas;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // similar to buttonmanagement, turns on respective canvas'
     public void LogScreenCanvas ()
     {
         mainLogScreenCanvas.SetActive(true);

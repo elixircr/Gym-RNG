@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SpinManager : MonoBehaviour
 {
+    // variables
     public static SpinManager instance;
     
     public int spinsLeft = 3;
@@ -27,6 +28,7 @@ public class SpinManager : MonoBehaviour
     public int completedSets = 0;
 
 
+    // before anything else runs, creates instance of this script to prevent any bugs;
     void Awake()
     {
         instance = this;
@@ -38,6 +40,7 @@ public class SpinManager : MonoBehaviour
         UpdateUI();
     }
     
+    // function that handels spins
     public void Spin()
     {
         if (spinsLeft <= 0)
@@ -82,17 +85,20 @@ public class SpinManager : MonoBehaviour
             StartCoroutine(ShowResult(prefabToAdd.name));
     }
 
+    // adds won item to inv
     void AddToInv(GameObject prefab)
     {
         if (prefab != null)
             Instantiate(prefab, invPanelParent, false);
     }
     
+    // function that updates text
     private void UpdateUI()
     {
         spinsText.text = "Spins left: " + spinsLeft.ToString();
     }
     
+    // ienumerator for timed popups
     private IEnumerator ShowResult(string itemName)
     {
         resultPanel.SetActive(true);
@@ -103,6 +109,7 @@ public class SpinManager : MonoBehaviour
         resultPanel.SetActive(false);
     }
 
+    // functions that gets called by ToggleCounter.cs;
     public void AddCompletedSet()
     {
         completedSets++;
@@ -112,7 +119,8 @@ public class SpinManager : MonoBehaviour
     {
         completedSets--;
     }
-
+    
+    // funtion that gets called when finsihed
     public void FinishedWorkoutSpins()
     {
         spinsLeft += completedSets;
@@ -120,7 +128,8 @@ public class SpinManager : MonoBehaviour
         StartCoroutine(FinishWorkout());
         completedSets = 0;
     }
-
+    
+    // timed screen
     private IEnumerator FinishWorkout()
     {
         FinishPanel.SetActive(true);

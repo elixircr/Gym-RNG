@@ -3,22 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManagement : MonoBehaviour
 {
+    // variables
     public GameObject homeScreen;
     public GameObject logScreen;
     public GameObject invScreen;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    
+    // functions that turns on home screen, etc
+    
     public void HomeScreen()
     {
         homeScreen.SetActive(true);
