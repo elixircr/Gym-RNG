@@ -13,30 +13,35 @@ public class ExerciseSelectionManager : MonoBehaviour
 
     public Timer timerScript;
 
+    // runs every time it is enabled
+    void OnEnable()
+    {
+        // for loop
+        for (int i = logContentParent.childCount - 1; i >= 0; i--)
+        {
+            // resets log 
+            Transform child = logContentParent.GetChild(i);
+            Debug.Log(child.tag);
+            if (child.CompareTag("Exercise"))
+                Destroy(child.gameObject);
+        }
+    }
+
     // function that gets called when the exercise is selected; exercise name is chosen in the inspector panel
     public void SelectExercise(string exerciseName)
     {
         GameObject entry = Instantiate(exerciseEntryPrefab, logContentParent, false);
-        
+
         int buttonIndex = addExerciseButton.transform.GetSiblingIndex();
         entry.transform.SetSiblingIndex(buttonIndex);
-        
+
         TMP_Text textComponent = entry.GetComponentInChildren<TMP_Text>();
         if (textComponent != null)
         {
             textComponent.text = exerciseName;
         }
-        
+
         mainLogScreen.SetActive(true);
         exerciseSelectionScreen.SetActive(false);
-    }
-
-    // update function
-    void Update()
-    {
-        if (timerScript.running == false)
-        {
-            Destroy(exerciseEntryPrefab);
-        }
     }
 }

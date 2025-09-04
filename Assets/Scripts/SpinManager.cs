@@ -32,6 +32,7 @@ public class SpinManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        ClearLogScreen();
     }
     
     void Start()
@@ -127,6 +128,7 @@ public class SpinManager : MonoBehaviour
         UpdateUI();
         StartCoroutine(FinishWorkout());
         completedSets = 0;
+        
     }
     
     // timed screen
@@ -138,5 +140,13 @@ public class SpinManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         
         FinishPanel.SetActive(false);
+    }
+    
+    public void ClearLogScreen()
+    {
+        for(int i = invPanelParent.childCount - 1; i>=0; i--)
+        {
+            Destroy(invPanelParent.GetChild(i).gameObject);
+        }
     }
 }
