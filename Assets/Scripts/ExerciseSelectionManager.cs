@@ -1,3 +1,4 @@
+using System.Net;
 using System.Timers;
 using UnityEngine;
 using TMPro;
@@ -16,6 +17,11 @@ public class ExerciseSelectionManager : MonoBehaviour
     // runs every time it is enabled
     void OnEnable()
     {
+        if (Timer.instance.running == true)
+        {
+            Debug.Log("Still running");
+            return;
+        }
         // for loop
         for (int i = logContentParent.childCount - 1; i >= 0; i--)
         {

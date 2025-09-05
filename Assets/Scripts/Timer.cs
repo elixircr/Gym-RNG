@@ -3,10 +3,16 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    public static Timer instance;
+    
     public TMP_Text timerText;
     private float timePast = 0f;
     public bool running = false;
-    
+
+    void Awake()
+    {
+        instance = this;
+    }
     // update function; runs every frame
     void Update()
     {

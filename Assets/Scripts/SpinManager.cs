@@ -7,23 +7,25 @@ public class SpinManager : MonoBehaviour
 {
     // variables
     public static SpinManager instance;
-    
+
     public int spinsLeft = 3;
-    
+
     public GameObject resultPanel;
     public GameObject FinishPanel;
 
     public TMP_Text spinsText;
     public TMP_Text resultText;
     public TMP_Text setResultText;
-    
+
     public Transform invPanelParent;
 
-    public List<GameObject> commonPrefabs; 
-    public List<GameObject> rarePrefabs; 
-    public List<GameObject> epicPrefabs; 
-    public List<GameObject> legendaryPrefabs; 
+    public List<GameObject> commonPrefabs;
+    public List<GameObject> rarePrefabs;
+    public List<GameObject> epicPrefabs;
+    public List<GameObject> legendaryPrefabs;
     public List<GameObject> mythicPrefabs;
+
+    public string rarity;
 
     public int completedSets = 0;
 
@@ -32,15 +34,14 @@ public class SpinManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        ClearLogScreen();
     }
-    
+
     void Start()
     {
         resultPanel.SetActive(false);
         UpdateUI();
     }
-    
+
     // function that handels spins
     public void Spin()
     {
@@ -49,39 +50,48 @@ public class SpinManager : MonoBehaviour
             Debug.Log("No spins");
             return;
         }
-        
+
         spinsLeft--;
-        
+
         GameObject prefabToAdd = null; // resets back to empty;
-        
+        rarity = null;
+
         int number = Random.Range(1, 1000);
         Debug.Log(number);
-        if (number <= 2) 
+        if (number <= 2)
         {
             Debug.Log("Mythic!"); // 0.2%
             prefabToAdd = mythicPrefabs[Random.Range(0, mythicPrefabs.Count)];
-        }else if (number <= 10)
+            rarity = "Mythic";
+        }
+        else if (number <= 10)
         {
             Debug.Log("Legendary!"); // 0.8%
-            prefabToAdd =  legendaryPrefabs[Random.Range(0, legendaryPrefabs.Count)];
-        } else if (number <= 100)
+            prefabToAdd = legendaryPrefabs[Random.Range(0, legendaryPrefabs.Count)];
+            rarity = "Legendary";
+        }
+        else if (number <= 100)
         {
-            Debug.Log("Epic!");  //~10%
+            Debug.Log("Epic!"); //~10%
             prefabToAdd = epicPrefabs[Random.Range(0, epicPrefabs.Count)];
-        } else if (number <= 500)
+            rarity = "Epic";
+        }
+        else if (number <= 500)
         {
             Debug.Log("Rare!"); //40%
-            prefabToAdd =  rarePrefabs[Random.Range(0, rarePrefabs.Count)];
+            prefabToAdd = rarePrefabs[Random.Range(0, rarePrefabs.Count)];
+            rarity = "Rare";
         }
         else
         {
             Debug.Log("Common");
-            prefabToAdd =  commonPrefabs[Random.Range(0, commonPrefabs.Count)];
+            prefabToAdd = commonPrefabs[Random.Range(0, commonPrefabs.Count)];
+            rarity = "Common";
         }
-        
+
         AddToInv(prefabToAdd);
         UpdateUI();
-        
+
         if (prefabToAdd != null)
             StartCoroutine(ShowResult(prefabToAdd.name));
     }
@@ -92,18 +102,18 @@ public class SpinManager : MonoBehaviour
         if (prefab != null)
             Instantiate(prefab, invPanelParent, false);
     }
-    
+
     // function that updates text
     private void UpdateUI()
     {
         spinsText.text = "Spins left: " + spinsLeft.ToString();
     }
-    
+
     // ienumerator for timed popups
     private IEnumerator ShowResult(string itemName)
     {
         resultPanel.SetActive(true);
-        resultText.text = "You got: " + itemName;
+        resultText.text = rarity + "!" + "\nYou got: " + itemName;
 
         yield return new WaitForSeconds(2f);
 
@@ -120,7 +130,7 @@ public class SpinManager : MonoBehaviour
     {
         completedSets--;
     }
-    
+
     // funtion that gets called when finsihed
     public void FinishedWorkoutSpins()
     {
@@ -128,9 +138,9 @@ public class SpinManager : MonoBehaviour
         UpdateUI();
         StartCoroutine(FinishWorkout());
         completedSets = 0;
-        
+
     }
-    
+
     // timed screen
     private IEnumerator FinishWorkout()
     {
@@ -138,15 +148,7 @@ public class SpinManager : MonoBehaviour
         setResultText.text = "You have finished: " + completedSets + " sets!";
 
         yield return new WaitForSeconds(2f);
-        
+
         FinishPanel.SetActive(false);
-    }
-    
-    public void ClearLogScreen()
-    {
-        for(int i = invPanelParent.childCount - 1; i>=0; i--)
-        {
-            Destroy(invPanelParent.GetChild(i).gameObject);
-        }
     }
 }
